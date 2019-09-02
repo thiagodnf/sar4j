@@ -7,6 +7,8 @@ Statistical Analysis by using R for Java Applications
     - Kruskal-Wallis
 - Post-Hoc Tests
     - Nemenyi
+- Effect Size
+    - Vargha and Delaney A measure 
 - Works on Java 1.8
 
 ## How to install
