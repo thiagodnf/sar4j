@@ -1,4 +1,4 @@
-# sar4j
+# SAR4J
 Statistical Analysis by using R for Java Applications
 
 ## Setup
