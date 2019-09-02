@@ -1,6 +1,8 @@
 # SAR4J
 Statistical Analysis by using R for Java Applications
 
+[![Build Status](https://travis-ci.org/thiagodnf/sar4j.svg?branch=master)](https://travis-ci.org/thiagodnf/sar4j)
+
 ## Features
 
 - Noparametric Tests
