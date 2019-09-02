@@ -22,16 +22,16 @@ public class Explorer {
         
         KruskalWallisTest kruskal = new KruskalWallisTest();
 
-//        TestResult testResult = kruskal.test(observations);
-//        
-//        System.out.println(testResult);
+        TestResult testResult = kruskal.test(observations);
+        
+        System.out.println(testResult);
         
         VarghaDelaneyTest effectSizeTest = new VarghaDelaneyTest();
         
         System.out.println(effectSizeTest.test(observations));
         
-//        TestForLatexOutput output = new TestForLatexOutput();
-//        
-//        System.out.println(output.getOutput(testResult));
+        TestForLatexOutput output = new TestForLatexOutput();
+        
+        System.out.println(output.getOutput(testResult));
     }
 }
