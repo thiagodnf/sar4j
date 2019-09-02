@@ -14,12 +14,16 @@ Statistical Analysis by using R for Java Applications
 This project uses GitHub as a Maven Repository. Then you have just add the following section to your repositories tag in pom.xml
 
 ```xml
-<repositories>
-    <repository>
-        <id>jvalidation-github</id>
-        <url>https://github.com/jvalidation/mvn-repo/raw/master/releases</url>
-    </repository>
-</repositories>
+<repository>
+    <id>mvn-repo</id>
+    <url>https://github.com/thiagodnf/mvn-repo/raw/master/releases</url>
+    <releases>
+        <enabled>true</enabled>
+    </releases>
+    <snapshots>
+        <enabled>true</enabled>
+    </snapshots>
+</repository>
 ```
 
 Then add a dependency into tag of your pom.xml
