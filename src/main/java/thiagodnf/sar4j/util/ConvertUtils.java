@@ -11,8 +11,10 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import thiagodnf.sar4j.result.EffectSizeResult;
 import thiagodnf.sar4j.result.PostHocResult;
 import thiagodnf.sar4j.result.TestResult;
+import thiagodnf.sar4j.test.effectsize.AbstractEffectSize;
 import thiagodnf.sar4j.test.nonparametric.AbstractNonparametric;
 import thiagodnf.sar4j.test.posthoc.AbstractPostHocTest;
 
@@ -23,6 +25,8 @@ public class ConvertUtils {
         Preconditions.checkNotNull(value, "The value must not be null");
         Preconditions.checkArgument(!value.isEmpty(), "The value must not be empty");
 
+        value = value.trim();
+                
         if (value.equalsIgnoreCase("NA")) {
             return Double.NaN;
         }
@@ -35,6 +39,8 @@ public class ConvertUtils {
         Preconditions.checkNotNull(value, "The value must not be null");
         Preconditions.checkArgument(!value.isEmpty(), "The value must not be empty");
 
+        value = value.trim();
+        
         if (value.equalsIgnoreCase("NA")) {
             return 0;
         }
@@ -153,5 +159,35 @@ public class ConvertUtils {
         }
 
         return statsResult;
+    }
+
+    public static EffectSizeResult toEffectSizeResult(String source, String target, String content) {
+
+        Preconditions.checkNotNull(content, "The content must not be null");
+        Preconditions.checkArgument(!content.isEmpty(), "The content must not be empty");
+
+        EffectSizeResult result = new EffectSizeResult();
+
+        result.setSource(source);
+        result.setTarget(target);
+        
+        String[] lines = content.split("\n");
+        
+        for (String line : lines) {
+
+            String[] parts = line.split(":");
+
+            String key = parts[0];
+
+            if (key.equalsIgnoreCase(AbstractEffectSize.ESTIMATE)) {
+                result.setEstimate(ConvertUtils.toDouble(parts[1]));
+            } else if (key.equalsIgnoreCase(AbstractEffectSize.MAGNITUDE)) {
+                result.setMagnitude(ConvertUtils.toInteger(parts[1]));
+            } else if (key.equalsIgnoreCase(AbstractEffectSize.LEVEL)) {
+                result.setLevel(parts[1].trim());
+            }
+        }
+
+        return result;
     }
 }

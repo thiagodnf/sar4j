@@ -7,6 +7,7 @@ import java.util.List;
 import thiagodnf.sar4j.data.Observation;
 import thiagodnf.sar4j.output.TestForLatexOutput;
 import thiagodnf.sar4j.result.TestResult;
+import thiagodnf.sar4j.test.effectsize.VarghaDelaneyTest;
 import thiagodnf.sar4j.test.nonparametric.KruskalWallisTest;
 
 public class Explorer {
@@ -21,12 +22,16 @@ public class Explorer {
         
         KruskalWallisTest kruskal = new KruskalWallisTest();
 
-        TestResult testResult = kruskal.test(observations);
+//        TestResult testResult = kruskal.test(observations);
+//        
+//        System.out.println(testResult);
         
-        System.out.println(testResult);
+        VarghaDelaneyTest effectSizeTest = new VarghaDelaneyTest();
         
-        TestForLatexOutput output = new TestForLatexOutput();
+        System.out.println(effectSizeTest.test(observations));
         
-        System.out.println(output.getOutput(testResult));
+//        TestForLatexOutput output = new TestForLatexOutput();
+//        
+//        System.out.println(output.getOutput(testResult));
     }
 }
