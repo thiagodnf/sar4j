@@ -81,12 +81,6 @@ public class ObservationUtils {
         return matrix;
     }
     
-    /**
-     * 
-     * @param means Means
-     * @param sds Standard Deviations
-     * @return
-     */
     public static List<Integer> getBestIndexes(List<Observation> observations, boolean bestIsLower) {
 
         Preconditions.checkNotNull(observations, "The observations must not be null");
