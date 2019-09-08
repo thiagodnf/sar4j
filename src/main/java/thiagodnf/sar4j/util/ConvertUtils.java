@@ -11,12 +11,8 @@ import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import thiagodnf.sar4j.result.EffectSizeResult;
-import thiagodnf.sar4j.result.PostHocResult;
-import thiagodnf.sar4j.result.TestResult;
+import thiagodnf.sar4j.result.ResultEffectSize;
 import thiagodnf.sar4j.test.effectsize.AbstractEffectSize;
-import thiagodnf.sar4j.test.nonparametric.AbstractNonparametric;
-import thiagodnf.sar4j.test.posthoc.AbstractPostHocTest;
 
 public class ConvertUtils {
 
@@ -27,7 +23,7 @@ public class ConvertUtils {
 
         value = value.trim();
                 
-        if (value.equalsIgnoreCase("NA")) {
+        if (value.equalsIgnoreCase("NA") || value.equalsIgnoreCase("NAN")) {
             return Double.NaN;
         }
 
@@ -41,7 +37,7 @@ public class ConvertUtils {
 
         value = value.trim();
         
-        if (value.equalsIgnoreCase("NA")) {
+        if (value.equalsIgnoreCase("NA") || value.equalsIgnoreCase("NAN")) {
             return 0;
         }
 
@@ -70,12 +66,27 @@ public class ConvertUtils {
         return toIntegerList(Arrays.asList(values));
     }
     
+    public static String toString(String value, int decimalPlaces) {
+        
+        Preconditions.checkArgument(decimalPlaces >= -1, "The decimalPlaces must be >= 1");
+        
+        if (decimalPlaces == -1) {
+            return value;
+        }
+        
+        return toString(toDouble(value), decimalPlaces);
+    }
+    
     public static String toString(double value, int decimalPlaces) {
-        
-        Preconditions.checkArgument(decimalPlaces >= 1, "The decimalPlaces must be >= 1");
-        
-        NumberFormat formatter = new DecimalFormat("#0."+Strings.repeat("0", decimalPlaces));     
-        
+
+        Preconditions.checkArgument(decimalPlaces >= -1, "The decimalPlaces must be >= 1");
+
+        if (decimalPlaces == -1) {
+            return String.valueOf(value);
+        }
+
+        NumberFormat formatter = new DecimalFormat("#0." + Strings.repeat("0", decimalPlaces));
+
         return formatter.format(value);
     }
 
@@ -97,6 +108,10 @@ public class ConvertUtils {
         return trim(Arrays.asList(values));
     }
 
+    public static <T> T fromJson(String content, Class<T> clsObject) {
+        return new Gson().fromJson(content, clsObject);
+    }
+    
     public static String toJson(Object object) {
 
         Gson gson = new GsonBuilder().serializeSpecialFloatingPointValues().create();
@@ -104,69 +119,12 @@ public class ConvertUtils {
         return gson.toJson(object);
     }
     
-    public static PostHocResult toPostHocResult(String content) {
+    public static ResultEffectSize toEffectSizeResult(String source, String target, String content) {
 
         Preconditions.checkNotNull(content, "The content must not be null");
         Preconditions.checkArgument(!content.isEmpty(), "The content must not be empty");
 
-        PostHocResult postHocResult = new PostHocResult();
-
-        String[] lines = content.split("\n");
-
-        for (String line : lines) {
-
-            String[] parts = line.split(":");
-
-            String key = parts[0];
-            String[] value = parts[1].trim().split(";");
-
-            if (key.equalsIgnoreCase(AbstractPostHocTest.VALUES)) {
-                postHocResult.setValues(ConvertUtils.toDoubleList(value));
-            } else if (key.equalsIgnoreCase(AbstractPostHocTest.DIMENSIONS)) {
-                postHocResult.setDimensions(ConvertUtils.toIntegerList(value));
-            } else if (key.equalsIgnoreCase(AbstractPostHocTest.ROWS)) {
-                postHocResult.setRows(ConvertUtils.trim(value));
-            } else if (key.equalsIgnoreCase(AbstractPostHocTest.COLUMNS)) {
-                postHocResult.setColumns(ConvertUtils.trim(value));
-            }
-        }
-
-        return postHocResult;
-    }
-
-    public static TestResult toStatResult(String content) {
-
-        Preconditions.checkNotNull(content, "The content must not be null");
-        Preconditions.checkArgument(!content.isEmpty(), "The content must not be empty");
-
-        TestResult statsResult = new TestResult();
-
-        String[] lines = content.split("\n");
-
-        for (String line : lines) {
-
-            String[] parts = line.split(":");
-
-            String key = parts[0];
-
-            if (key.equalsIgnoreCase(AbstractNonparametric.CHI_SQUARED)) {
-                statsResult.setChiSquared(ConvertUtils.toDouble(parts[1]));
-            } else if (key.equalsIgnoreCase(AbstractNonparametric.P_VALUE)) {
-                statsResult.setPValue(ConvertUtils.toDouble(parts[1]));
-            } else if (key.equalsIgnoreCase(AbstractNonparametric.DF)) {
-                statsResult.setDf(ConvertUtils.toDouble(parts[1]));
-            }
-        }
-
-        return statsResult;
-    }
-
-    public static EffectSizeResult toEffectSizeResult(String source, String target, String content) {
-
-        Preconditions.checkNotNull(content, "The content must not be null");
-        Preconditions.checkArgument(!content.isEmpty(), "The content must not be empty");
-
-        EffectSizeResult result = new EffectSizeResult();
+        ResultEffectSize result = new ResultEffectSize();
 
         result.setSource(source);
         result.setTarget(target);

@@ -1,23 +1,23 @@
 package thiagodnf.sar4j.result;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 import thiagodnf.sar4j.util.ConvertUtils;
 
-@Getter
 @Setter
-public class PostHocResult {
+@Getter
+public class ResultEffectSize {
 
-    private List<String> rows;
+    protected String source;
+    
+    protected String target;
+    
+    protected double estimate;
 
-    private List<String> columns;
+    protected int magnitude;
 
-    private List<Double> values;
-
-    private List<Integer> dimensions;
-
+    protected String level;
+    
     public String toString() {
         return ConvertUtils.toJson(this);
     }

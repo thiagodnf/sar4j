@@ -1,7 +1,9 @@
 package thiagodnf.sar4j.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Preconditions;
 
@@ -17,6 +19,10 @@ public class Observation {
 
     private List<Double> values;
 
+    public Observation(String name, double... values) {
+        this(name, Arrays.stream(values).boxed().collect(Collectors.toList()));
+    }
+    
     public Observation(String name, List<Double> values) {
 
         Preconditions.checkNotNull(name, "The name must not be null");

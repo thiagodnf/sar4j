@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 import thiagodnf.sar4j.data.Observation;
-import thiagodnf.sar4j.result.EffectSizeResult;
+import thiagodnf.sar4j.result.ResultEffectSize;
 import thiagodnf.sar4j.test.AbstractTest;
 import thiagodnf.sar4j.util.ConvertUtils;
 import thiagodnf.sar4j.util.FileUtils;
@@ -22,14 +22,14 @@ public abstract class AbstractEffectSize extends AbstractTest {
 
     public static final String LEVEL = "level";
 
-    public List<EffectSizeResult> test(List<Observation> observations) {
+    public List<ResultEffectSize> test(List<Observation> observations) {
 
         Preconditions.checkNotNull(observations, "The observations must not be null");
         Preconditions.checkArgument(!observations.isEmpty(), "The observations must not be empty");
 
-        String script = FileUtils.getFileContentFromResources(getTemplate());
+        String script = FileUtils.getFileContentFromResources(getTemplateFile());
         
-        List<EffectSizeResult> results = new ArrayList<>();
+        List<ResultEffectSize> results = new ArrayList<>();
         
         for (Observation ob1 : observations) {
 
@@ -42,7 +42,7 @@ public abstract class AbstractEffectSize extends AbstractTest {
                     copiedScript = copiedScript.replaceAll("@VALUES@", ObservationUtils.getValues(Arrays.asList(ob1, ob2)));
                     copiedScript = copiedScript.replaceAll("@GROUPS@", ObservationUtils.getGroups(Arrays.asList(ob1, ob2)));
 
-                    EffectSizeResult result = null;
+                    ResultEffectSize result = null;
 
                     try {
                         String content = RUtils.run(copiedScript.toString());

@@ -2,18 +2,18 @@ package thiagodnf.sar4j.test.nonparametric;
 
 import lombok.Getter;
 import lombok.Setter;
-import thiagodnf.sar4j.test.posthoc.NemenyiTest;
+import thiagodnf.sar4j.test.posthoc.WilcoxTest;
 
 @Getter
 @Setter
 public class KruskalWallisTest extends AbstractNonparametric {
 
     public KruskalWallisTest() {
-        super(new NemenyiTest());
+        super(new WilcoxTest());
     }
 
     @Override
-    public String getTemplate() {
-        return "templates/kruskal-wallis-test.r";
+    public String getTemplateFile() {
+        return "templates/nonparametric/kruskal-wallis-test.r";
     }
 }
