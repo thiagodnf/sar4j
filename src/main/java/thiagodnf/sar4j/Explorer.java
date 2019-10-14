@@ -46,9 +46,9 @@ public class Explorer {
         
         System.out.println(resultTest);
         
-//        VarghaDelaneyTest effectSizeTest = new VarghaDelaneyTest();
+        VarghaDelaneyTest effectSizeTest = new VarghaDelaneyTest();
 //        
-//        System.out.println(effectSizeTest.test(observations));
+        System.out.println(effectSizeTest.test(observations));
 //        
         ResultTestForLatexOutput output = new ResultTestForLatexOutput();
 //        

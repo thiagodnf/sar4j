@@ -4,7 +4,7 @@ public class VarghaDelaneyTest extends AbstractEffectSize {
 
     @Override
     protected String getTemplateFile() {
-        return "templates/effsize-vargha-delaney-test.r";
+        return "templates/effect-size/vargha-delaney-test.r";
     }
 
 }

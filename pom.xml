@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>thiagodnf.sar4j</groupId>
     <artifactId>sar4j</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <name>SAR4J</name>
     <description>Statistical Analysis by using R for Java Applications</description>
     <properties>
